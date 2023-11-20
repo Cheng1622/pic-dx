@@ -12,7 +12,7 @@ import (
 )
 
 var path string
-var width1, width2, height1, height2 int
+var width1, width2, width3, height1, height2, height3 int
 
 func main() {
 	fmt.Println("文件夹路径为: ")
@@ -23,6 +23,9 @@ func main() {
 	fmt.Println("当图片宽度小于高度时，请设置宽度、高度: ")
 	fmt.Scan(&width2)
 	fmt.Scan(&height2)
+	fmt.Println("当图片宽度等于高度时，请设置宽度、高度: ")
+	fmt.Scan(&width3)
+	fmt.Scan(&height3)
 	dir, err := os.Open(path)
 	if err != nil {
 		fmt.Println(err)
@@ -71,8 +74,10 @@ func alter(pic string, width1, height1, width2, height2 int) {
 	var resizedImg image.Image
 	if width > height {
 		resizedImg = resize.Resize(uint(width1), uint(height1), img, resize.Lanczos3)
-	} else {
+	} else if width < height {
 		resizedImg = resize.Resize(uint(width2), uint(height2), img, resize.Lanczos3)
+	} else {
+		resizedImg = resize.Resize(uint(width3), uint(height3), img, resize.Lanczos3)
 	}
 
 	// 创建新图片文件
